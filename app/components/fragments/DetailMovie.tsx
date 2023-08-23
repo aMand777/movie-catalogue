@@ -49,7 +49,7 @@ const DetailMovie = (Props: DetailMovieProps) => {
     })
   }, [id])
 
-  const { title, poster_path, overview, release_date, vote_average, budget, popularity, runtime, status, tagline, original_language, original_title } = detailMovies
+  const { title, poster_path, overview, release_date, vote_average, budget, runtime, tagline, original_language, original_title } = detailMovies
 
   return (
     <>
@@ -80,8 +80,6 @@ const DetailMovie = (Props: DetailMovieProps) => {
             <p className='italic mt-2'><span className='font-semibold'>Budget</span> : {budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
             <p className='italic mt-2'><span className='font-semibold'>Original Title</span> : {original_title}</p>
             <p className='italic mt-2'><span className='font-semibold'>Original Language</span> : {original_language}</p>
-              <p className='italic mt-2'><span className='font-semibold'>Popularity</span> : {popularity}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Status</span> : {status}</p>
             <p className='italic mt-2'><span className='font-semibold'>Tagline</span> : {tagline}</p>
             <div className='flex flex-wrap mt-2'>
               <span className='font-semibold'>Production Companies :</span>
