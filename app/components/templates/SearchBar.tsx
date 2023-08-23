@@ -4,7 +4,6 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { useState, useEffect } from 'react'
 import { searchMovie } from '@/app/services/movies'
 import SearchMenu from '../fragments/SearchMenu'
-import { clear } from 'console'
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
