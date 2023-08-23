@@ -4,11 +4,26 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { useState, useEffect } from 'react'
 import { searchMovie } from '@/app/services/movies'
 import SearchMenu from '../fragments/SearchMenu'
+import { clear } from 'console'
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const [keyword, setKeyword] = useState('')
   const [movieSearch, setMovieSearch] = useState([])
+  const [scroll, setScroll] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setScroll(scrollY);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value)
@@ -34,9 +49,9 @@ const SearchBar = () => {
   return (
     <>
     <button onClick={handleClick} className={`${!isFocused && 'hidden'}`}>
-      <div className='bg-black opacity-50 cursor-default w-screen h-screen fixed top-0 z-50'></div>
+      <div className='bg-black opacity-50 cursor-default w-screen h-screen fixed top-0 z-40'></div>
     </button>
-    <div className={`container px-3 sm:w-2/3 md:px-5 lg:px-10 relative pt-14 ${isFocused && '-mt-6'}`}>
+    <div className={`container px-3 sm:w-2/3 md:px-5 lg:px-10 fixed top-14 z-50 ${scroll > 15 && !isFocused ? 'opacity-5' : ''}`}>
     <InputGroup>
       <InputLeftElement pointerEvents='none'>
         <SearchIcon color='gray.300' />
