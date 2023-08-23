@@ -49,9 +49,9 @@ const SearchBar = () => {
   return (
     <>
     <button onClick={handleClick} className={`${!isFocused && 'hidden'}`}>
-      <div className='bg-black opacity-50 cursor-default w-screen h-screen fixed top-0 z-40'></div>
+      <div className='bg-black opacity-50 cursor-default w-screen h-screen fixed top-0 z-30'></div>
     </button>
-    <div className={`container px-3 sm:w-2/3 md:px-5 lg:px-10 fixed top-14 z-50 ${scroll > 15 && !isFocused ? 'opacity-5' : ''}`}>
+    <div className={`container px-3 sm:w-2/3 md:px-5 lg:px-10 fixed top-14 z-40 ${scroll > 15 && !isFocused ? 'opacity-5' : ''} ${!isFocused && 'z-0'}`}>
     <InputGroup>
       <InputLeftElement pointerEvents='none'>
         <SearchIcon color='gray.300' />
