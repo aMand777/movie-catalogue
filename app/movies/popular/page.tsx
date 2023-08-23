@@ -12,6 +12,7 @@ const PopularMoviesPage = () => {
     })
   }, [])
 
+
   return (
     <>
     <div className='grid grid-cols-3 gap-2 px-3 md:px-5 lg:px-10 md:grid-cols-4 md:gap-3 lg:grid-cols-6 lg:gap-5 top-28 absolute -z-10'>

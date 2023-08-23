@@ -23,7 +23,7 @@ const CardMovie = (Props: CardMoviesProps) => {
   
   return (
     <>
-      <Card maxW='md'>
+      <Card maxW='sm'>
         <button onClick={onOpen}>
         <CardBody className='p-0 static'>
           <Image
