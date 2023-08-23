@@ -4,6 +4,7 @@ import { Tooltip } from "@chakra-ui/react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
+import HamburgerMenu from "./Menu"
 
 const Navigation = () => {
   const [currentPath, setCurrenPath] = useState('')
@@ -13,13 +14,13 @@ const Navigation = () => {
     setCurrenPath(pathname.substring(8))
   }, [pathname])
 
-  console.log('currentPathname==>', currentPath)
-
   return (
-    <div className='grid grid-cols-5 gap-10'>
+    <>
+    <HamburgerMenu />
+    <div className='hidden md:flex justify-evenly'>
       <Tooltip label='Popular Movie' fontSize='sm'>
         <Link href='/movies/popular'>
-          <Image src='/img/popular.svg' alt='popular-icon' width={20} height={20} className={`hover:animate-pulse ${currentPath === 'popular' && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
+          <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`hover:animate-pulse ${currentPath === 'popular' && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
         </Link>
       </Tooltip>
       <Tooltip label='Trending' fontSize='sm'>
@@ -43,6 +44,7 @@ const Navigation = () => {
         </Link>
       </Tooltip>
     </div>
+    </>
   )
 }
 
