@@ -70,7 +70,7 @@ const DetailMovie = (Props: DetailMovieProps) => {
             <p className='italic text-justify'><span className='font-semibold'>Overview</span> : {overview}</p>
             <p className='italic mt-2'><span className='font-semibold'>Release</span> : {release_date}</p>
             <p className='italic mt-2'><span className='font-semibold'>Runtime</span> : {`${runtime} min`}</p>
-            <div className='inline mt-2'>
+            <div className='flex flex-wrap mt-2'>
               <span className='font-semibold'>Genre :</span>
               {genres.length > 0 && genres.map((genre: any) => (
               <p key={genre.id} className='italic text-justify'>{`${genre.name}, `}</p>
@@ -83,19 +83,19 @@ const DetailMovie = (Props: DetailMovieProps) => {
               <p className='italic mt-2'><span className='font-semibold'>Popularity</span> : {popularity}</p>
             <p className='italic mt-2'><span className='font-semibold'>Status</span> : {status}</p>
             <p className='italic mt-2'><span className='font-semibold'>Tagline</span> : {tagline}</p>
-            <div className='inline mt-2'>
+            <div className='flex flex-wrap mt-2'>
               <span className='font-semibold'>Production Companies :</span>
               {companies.length > 0 && companies.map((company: any) => (
               <p key={company.id} className='italic text-justify'>{`${company.name}, `}</p>
               ))}
             </div>
-            <div className='inline mt-2'>
+            <div className='flex flex-wrap mt-2'>
               <span className='font-semibold'>Production Country :</span>
               {countries.length > 0 && countries.map((country: any) => (
               <p key={country.id} className='italic text-justify'>{`${country.name}, `}</p>
               ))}
             </div>
-            <div className='inline mt-2'>
+            <div className='flex flex-wrap mt-2'>
               <span className='font-semibold'>Spoken Language :</span>
               {spoken.length > 0 && spoken.map((speak: any) => (
               <p key={speak.id} className='italic text-justify'>{`${speak.name}, `}</p>
