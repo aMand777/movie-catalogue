@@ -20,7 +20,7 @@ const Navigation = () => {
     <div className='hidden md:flex justify-evenly'>
       <Tooltip label='Popular Movie' fontSize='sm'>
         <Link href='/movies/popular'>
-          <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`hover:animate-pulse ${currentPath === 'popular' && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
+          <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`hover:animate-pulse ${(currentPath === 'popular' || currentPath === '') && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
         </Link>
       </Tooltip>
       <Tooltip label='Trending' fontSize='sm'>

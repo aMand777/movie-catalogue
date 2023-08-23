@@ -27,31 +27,31 @@ const HamburgerMenu = () => {
         </MenuButton>
       <MenuList className='z-50'>
           <Link href='/movies/popular'>
-            <MenuItem>
+            <MenuItem className={`${(currentPath === 'popular' || currentPath === '') && 'text-primary'}`}>
               Popular
-              <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'popular' && 'animate-bounce'}`} />
+              <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`ml-auto mr-0 ${(currentPath === 'popular' || currentPath === '') && 'animate-bounce'}`} />
             </MenuItem>
           </Link>
         <Link href='/movies/trending'>
-            <MenuItem>
+            <MenuItem className={`${currentPath === 'trending' && 'text-primary'}`}>
               Trending
               <Image src='/img/trending.svg' alt='trending-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'trending' && 'animate-bounce'}`} />
               </MenuItem>
           </Link>
         <Link href='/movies/nowplaying'>
-            <MenuItem>
+            <MenuItem className={`${currentPath === 'nowplaying' && 'text-primary'}`}>
               Now Playing
               <Image src='/img/now-playing.svg' alt='now-playing-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'nowplaying' && 'animate-bounce'}`} />
               </MenuItem>
           </Link>
         <Link href='/movies/upcoming'>
-            <MenuItem>
+            <MenuItem className={`${currentPath === 'upcoming' && 'text-primary'}`}>
               Upcoming
               <Image src='/img/upcoming.svg' alt='upcoming-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'upcoming' && 'animate-bounce'}`} />
               </MenuItem>
           </Link>
         <Link href='/movies/toprated'>
-          <MenuItem>
+          <MenuItem className={`${currentPath === 'toprated' && 'text-primary'}`}>
           Top Rated
               <Image src='/img/top-rated.svg' alt='top-rated-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'toprated' && 'animate-bounce'}`} />
             </MenuItem>

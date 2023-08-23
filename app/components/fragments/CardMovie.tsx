@@ -31,7 +31,7 @@ const CardMovie = (Props: CardMoviesProps) => {
             src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${poster}`}
               alt={title}
             />
-          <Badge variant='solid' colorScheme='red' className='absolute top-0 right-0 rounded-tr-lg'>{label.substring(8) || 'Featured'}</Badge>
+          <Badge variant='solid' colorScheme='red' className='absolute top-0 right-0 rounded-tr-lg'>{label.substring(8) || 'Popular'}</Badge>
         </CardBody>
         <Divider />
           <Text fontSize='xs' className='font-semibold truncate'>{title}</Text>
