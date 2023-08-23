@@ -88,13 +88,13 @@ const DetailMovie = (Props: DetailMovieProps) => {
               ))}
             </div>
             <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Production Country :</span>
+              <span className='font-semibold'>Production Country: </span>
               {countries.length > 0 && countries.map((country: any) => (
               <p key={country.id} className='italic text-justify'>{`${country.name}, `}</p>
               ))}
             </div>
             <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Spoken Language :</span>
+              <span className='font-semibold'>Spoken Language: </span>
               {spoken.length > 0 && spoken.map((speak: any) => (
               <p key={speak.id} className='italic text-justify'>{`${speak.name}, `}</p>
               ))}
