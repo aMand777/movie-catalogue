@@ -76,13 +76,13 @@ const DetailMovie = (Props: DetailMovieProps) => {
               <p key={genre.id} className='italic text-justify'>{`${genre.name}, `}</p>
               ))}
             </div>
-            <p className='italic mt-2'><span className='font-semibold'>Rating</span> : {vote_average.toString().substring(0, 3)}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Budget</span> : {budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Original Title</span> : {original_title}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Original Language</span> : {original_language}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Tagline</span> : {tagline}</p>
+            <p className='italic mt-2'><span className='font-semibold'>Rating: </span>{vote_average.toString().substring(0, 3)}</p>
+            <p className='italic mt-2'><span className='font-semibold'>Budget: </span>{budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
+            <p className='italic mt-2'><span className='font-semibold'>Original Title: </span>{original_title}</p>
+            <p className='italic mt-2'><span className='font-semibold'>Original Language: </span>{original_language}</p>
+            <p className='italic mt-2'><span className='font-semibold'>Tagline: </span>{tagline}</p>
             <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Production Companies :</span>
+              <span className='font-semibold'>Production Companies: </span>
               {companies.length > 0 && companies.map((company: any) => (
               <p key={company.id} className='italic text-justify'>{`${company.name}, `}</p>
               ))}
