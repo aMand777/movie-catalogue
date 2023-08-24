@@ -77,13 +77,13 @@ const DetailMovie = (Props: DetailMovieProps) => {
               <p key={genre.id} className='italic text-justify mx-1'>{`${genre.name},`}</p>
               ))}
             </div>
-            <p className='italic mt-2'><span className='font-semibold mx-1'>Rating: </span>
+            <p className={`italic mt-2 ${vote_average === 0 && 'hidden'}`}><span className='font-semibold mx-1'>Rating: </span>
               <StarIcon color='yellow.500' className='mx-1 -mt-1' />
               <StarIcon color='yellow.500' className={`mx-1 -mt-1 ${vote_average < 7 && 'hidden' }`} />
               <StarIcon color='yellow.500' className={`mx-1 -mt-1 ${vote_average < 9 && 'hidden' }`} />
               {vote_average.toString().substring(0, 3)}
             </p>
-            <p className='italic mt-2'><span className='font-semibold'>Budget: </span>{budget === 0 ? '-' : budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
+            <p className={`italic mt-2 ${budget === 0 && 'hidden'}`}><span className='font-semibold'>Budget: </span>{budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
             <p className='italic mt-2'><span className='font-semibold'>Original Title: </span>{original_title}</p>
             <p className='italic mt-2'><span className='font-semibold'>Original Language: </span>{original_language}</p>
             <p className='italic mt-2'><span className='font-semibold'>Tagline: </span>{tagline}</p>
