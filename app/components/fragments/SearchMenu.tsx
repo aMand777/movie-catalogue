@@ -1,18 +1,18 @@
 import { Card, CardBody, Text, Divider, Image, useDisclosure } from '@chakra-ui/react'
 import DetailMovie from './DetailMovie'
+import { StarIcon } from '@chakra-ui/icons'
 
 type CardMoviesProps = {
   id: string;
   title: string;
   poster: string;
   year: string;
-  keyword: string;
-  onFocus: boolean;
+  rating: number;
 }
 
 const SearchMenu = (Props: CardMoviesProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { title, poster, year, id, keyword, onFocus } = Props
+  const { title, poster, year, rating, id } = Props
   
   return (
     <>
@@ -27,8 +27,12 @@ const SearchMenu = (Props: CardMoviesProps) => {
         />
       </CardBody>
     </Card>
-    <Text fontSize='xs' className='text-white col-span-3 text-left mx-2 xl:text-lg group-hover:text-primary'>{title}</Text>
-    <Text fontSize='xs' className='text-white col-span-1 text-justify -ml-3 xl:text-lg group-hover:text-primary'>{year}</Text>
+    <Text fontSize='xs' className='text-white col-span-3 text-left mx-2 2xl:text-lg group-hover:text-primary'>{title}</Text>
+          <Text fontSize='xs' className='text-white col-span-1 text-justify 2xl:text-lg group-hover:text-primary'>{year.substring(0, 4)}</Text>
+          <Text fontSize='xs' className='text-white col-span-1 text-justify 2xl:text-lg group-hover:text-primary'>
+            <StarIcon color='yellow.500' className='mx-1 -mt-1' />
+            {rating.toString().substring(0, 3)}
+          </Text>
     </div>
     <Divider className='-mt-2'/>
     </button>

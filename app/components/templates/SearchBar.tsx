@@ -50,7 +50,7 @@ const SearchBar = () => {
     <button onClick={handleClick} className={`${!isFocused && 'hidden'}`}>
       <div className='bg-black opacity-50 cursor-default w-screen h-screen fixed top-0 z-30'></div>
     </button>
-    <div className={`container px-3 sm:w-2/3 md:px-5 lg:px-10 fixed top-14 ${scroll > 15 && !isFocused ? 'opacity-5' : ''} ${isFocused ? 'z-40' : 'z-0'}`}>
+    <div className={`container px-3 sm:w-1/2 lg:w-1/3 md:px-5 lg:px-10 fixed top-14 ${scroll > 15 && !isFocused ? 'opacity-5' : ''} ${isFocused ? 'z-40' : 'z-0'}`}>
     <InputGroup>
       <InputLeftElement pointerEvents='none'>
         <SearchIcon color='gray.300' />
@@ -59,7 +59,7 @@ const SearchBar = () => {
     </InputGroup>
       <div className={`h-screen overflow-scroll relative ${keyword.length < 3 || !isFocused ? 'hidden' : ''}`}>
       {movieSearch.map((movie: any) => (
-        <SearchMenu key={movie.id} onFocus={isFocused} keyword={keyword} id={movie.id} title={movie.title} poster={movie.poster_path} year={movie.release_date} />
+        <SearchMenu key={movie.id} id={movie.id} title={movie.title} poster={movie.poster_path} year={movie.release_date} rating={ movie.vote_average } />
     ))}
       </div>
       </div>
