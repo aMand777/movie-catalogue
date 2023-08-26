@@ -61,14 +61,14 @@ const DetailMovie = (Props: DetailMovieProps) => {
           <ModalCloseButton />
           <ModalBody className='sm:flex'>
             <Image
-            width={{base: '200px', sm: '300px', lg: '400px'}}
-            height={{base: '300px', sm: '400', lg: '500px'}}
+            width={{base: '100px', sm: '300px', lg: '400px'}}
+            height={{base: '150px', sm: '400', lg: '500px'}}
             src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${poster_path}`}
               alt={title}
               className='mx-auto sm:block'
           />
           <div className='flex flex-col sm:ml-3 mt-3 sm:mt-0'>
-            <p className='italic text-justify'><span className='font-semibold'>Overview: </span>{overview}</p>
+            <p className='italic text-justif relative'><span className='font-semibold'>Overview: </span>{overview}</p>
             <p className='italic mt-2'><span className='font-semibold'>Release: </span>{release_date}</p>
             <p className='italic mt-2'><span className='font-semibold'>Runtime: </span>{`${runtime} min`}</p>
             <div className='flex flex-wrap mt-2'>
