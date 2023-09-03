@@ -20,7 +20,7 @@ const CardMoviesHome = (Props: CardProps) => {
     <div className='mx-1'>
       <div>
         <button onClick={onOpen}>
-        <div className='w-20 h-32 md:w-32 md:h-48 lg:w-40 lg:h-60 relative'>
+        <div className='w-24 h-36 md:w-32 md:h-48 lg:w-40 lg:h-60 relative'>
           <Image
           src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${poster}`}
           alt={title}
@@ -33,7 +33,7 @@ const CardMoviesHome = (Props: CardProps) => {
             </Badge>
         </div>
         <Divider />
-          <Text fontSize='xs' className='font-semibold truncate bg-white w-20 md:w-32 lg:w-40 px-1 rounded:lg'>{title}</Text>
+          <Text fontSize='xs' className='font-semibold truncate bg-white w-24 md:w-32 lg:w-40 px-1 rounded:lg'>{title}</Text>
       </button>
       </div>
       <DetailMovie id={id} onClose={onClose} isOpen={isOpen} />
