@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardBody, Text, Divider, Badge } from '@chakra-ui/react'
+import { Text, Divider, Badge } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import DetailMovie from './DetailMovie'
 import { useDisclosure } from '@chakra-ui/react'
