@@ -5,8 +5,8 @@ const auth = {
   }
 } 
 
-export const getPopularMovies = (res: any) => {
-  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/popular?&page=1`, auth)
+export const getPopularMovies = (page: number, res: any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/popular?&page=${page}`, auth)
     .then((response) => {
     res(response)
     })
@@ -35,8 +35,8 @@ export const getDetailMovie = (id: string, res: any) => {
   })
 }
 
-export const getNowPlayingMovies = (res: any) => {
-  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/now_playing?&page=1`, auth)
+export const getNowPlayingMovies = (page: number, res: any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/now_playing?&page=${page}`, auth)
   .then((response) => {
     res(response)
     })
@@ -45,8 +45,8 @@ export const getNowPlayingMovies = (res: any) => {
   })
 }
 
-export const getTopRatedMovies = (res: any) => {
-  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/top_rated?page=1`, auth)
+export const getTopRatedMovies = (page: number, res: any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/top_rated?&page=${page}`, auth)
   .then((response) => {
     res(response)
     })
@@ -55,8 +55,8 @@ export const getTopRatedMovies = (res: any) => {
   })
 }
 
-export const getUpcomingMovies = (res: any) => {
-  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/upcoming?page=1`, auth)
+export const getUpcomingMovies = (page: number, res: any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/upcoming?&page=${page}`, auth)
   .then((response) => {
     res(response)
     })
@@ -65,9 +65,9 @@ export const getUpcomingMovies = (res: any) => {
   })
 }
 
-export const getTrendingMovies = (res: any) => {
-  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/trending/movie/day?language=en-US`, auth)
-  .then((response) => {
+export const getTrendingMovies = (page: number, res: any) => {
+  axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/trending/movie/day?page=${page}`, auth)
+    .then((response) => {
     res(response)
     })
     .catch((error) => {

@@ -1,3 +1,13 @@
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+/* @media (max-width: 640px) { */
+  .scroll-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-none::-webkit-scrollbar {
+    display: none;
+  }
+/* } */
