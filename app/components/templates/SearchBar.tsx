@@ -55,7 +55,7 @@ const SearchBar = () => {
       <InputLeftElement pointerEvents='none'>
         <SearchIcon color='gray.300' />
       </InputLeftElement>
-      <Input onChange={handleChange} onFocus={handleFocus} placeholder='Search movie...' colorScheme='whiteAlpha' variant='filled' className='focus:text-white'/>
+      <Input type='search' onChange={handleChange} onFocus={handleFocus} placeholder='Search movie...' colorScheme='whiteAlpha' variant='filled' className='focus:text-white'/>
     </InputGroup>
       <div className={`h-screen overflow-scroll relative ${keyword.length < 3 || !isFocused ? 'hidden' : ''}`}>
       {movieSearch.map((movie: any) => (
