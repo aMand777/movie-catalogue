@@ -13,18 +13,18 @@ import {
   Image,
 } from '@chakra-ui/react'
 
-type DetailMovieProps = {
-  onClose: () => void;
-  isOpen: boolean;
-  id: string;
+interface DetailMovieProps {
+  onClose: () => void,
+  isOpen: boolean,
+  id: string,
 }
 
-const DetailMovie = (Props: DetailMovieProps) => {
+const DetailMovie: React.FC<DetailMovieProps> = ({ isOpen, onClose, id }) => {
   const [genres, setGenres] = useState([])
   const [companies, setCompanies] = useState([])
   const [countries, setCountries] = useState([])
   const [spoken, setSpoken] = useState([])
-  const [detailMovies, setDetailMovies] = useState({
+  const [detailMovies, setDetailMovies] = useState<any>({
     title: '',
     poster_path: '',
     overview: '',
@@ -38,7 +38,6 @@ const DetailMovie = (Props: DetailMovieProps) => {
     tagline: '',
     original_title: '',
   })
-  const { isOpen, onClose, id } = Props
 
   useEffect(() => {
     getDetailMovie(id, (res: any) => {
@@ -54,18 +53,18 @@ const DetailMovie = (Props: DetailMovieProps) => {
 
   return (
     <>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered size='full'>
+      <Modal onClose={onClose} isOpen={isOpen} size='full'>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader className='text-center mt-3'>{title}</ModalHeader>
+          <ModalHeader className='text-center mt-5'>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody className='sm:flex'>
             <Image
-            width={{base: '100px', sm: '300px', lg: '400px'}}
-            height={{base: '150px', sm: '400', lg: '500px'}}
+            width='400px'
+            height='500px'
             src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${poster_path}`}
               alt={title}
-              className='mx-auto sm:block'
+              className='mx-auto'
           />
           <div className='flex flex-col sm:ml-3 mt-3 sm:mt-0'>
             <p className='italic text-justif relative'><span className='font-semibold'>Overview: </span>{overview}</p>

@@ -13,6 +13,7 @@ const config: Config = {
         primary: '#F65151',
         secondary: 'FEF4F4',
         third: '503A3A',
+        viewAll: '#bebebe',
       },
     },
   },
