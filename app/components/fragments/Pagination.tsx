@@ -1,12 +1,12 @@
-type PaginationProps = {
-  totalPage: number;
-  currentPage: number
-  nextPage: () => void;
-  prevPage: () => void;
+interface PaginationProps {
+  totalPage: number,
+  currentPage: number,
+  nextPage: () => void,
+  prevPage: () => void,
 }
 
-const Pagination = (Props: PaginationProps) => {
-  const { totalPage, nextPage, prevPage, currentPage } = Props;
+const Pagination: React.FC<PaginationProps> = ({ totalPage, nextPage, prevPage, currentPage }) => {
+
   return (
     <>
       <div className={`col-span-3 md:col-span-4 lg:col-span-5 2xl:col-span-10 text-center text-white my-1 ${totalPage <= 1 && 'hidden'}`}>

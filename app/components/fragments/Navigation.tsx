@@ -2,17 +2,12 @@
 import Image from "next/image"
 import { Tooltip } from "@chakra-ui/react"
 import Link from "next/link"
-import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
-import HamburgerMenu from "./Menu"
+import HamburgerMenu from "./HamburgerMenu"
 
 const Navigation = () => {
-  const [currentPath, setCurrenPath] = useState('')
   const pathname = usePathname()
-
-  useEffect(() => {
-    setCurrenPath(pathname.substring(8))
-  }, [pathname])
+  const currentPath = pathname.substring(8)
 
   return (
     <>
@@ -20,7 +15,7 @@ const Navigation = () => {
     <div className='hidden md:flex justify-evenly'>
       <Tooltip label='Popular Movie' fontSize='sm'>
         <Link href='/movies/popular'>
-          <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`hover:animate-pulse ${(currentPath === 'popular') && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
+          <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`hover:animate-pulse ${currentPath === 'popular' && 'bg-white rounded-md hover:animate-none animate-bounce'}`} />
         </Link>
       </Tooltip>
       <Tooltip label='Trending' fontSize='sm'>

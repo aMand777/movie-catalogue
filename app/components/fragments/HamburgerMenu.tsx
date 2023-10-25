@@ -2,8 +2,7 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
 import {
   Menu,
   MenuButton,
@@ -12,12 +11,8 @@ import {
 } from '@chakra-ui/react'
 
 const HamburgerMenu = () => {
-  const [currentPath, setCurrenPath] = useState('')
   const pathname = usePathname()
-
-  useEffect(() => {
-    setCurrenPath(pathname.substring(8))
-  }, [pathname])
+  const currentPath = pathname.substring(8)
 
   return (
     <div className='md:hidden justify-self-center z-50'>
@@ -27,9 +22,9 @@ const HamburgerMenu = () => {
         </MenuButton>
       <MenuList className='z-50'>
           <Link href='/movies/popular'>
-            <MenuItem className={`${(currentPath === 'popular' || currentPath === '') && 'text-primary'}`}>
+            <MenuItem className={`${currentPath === 'popular' && 'text-primary'}`}>
               Popular
-              <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`ml-auto mr-0 ${(currentPath === 'popular' || currentPath === '') && 'animate-bounce'}`} />
+              <Image src='/img/like.svg' alt='like-icon' width={20} height={20} className={`ml-auto mr-0 ${currentPath === 'popular' && 'animate-bounce'}`} />
             </MenuItem>
           </Link>
         <Link href='/movies/trending'>

@@ -1,11 +1,11 @@
-import axios from 'axios'
+import axios, { AxiosResponse, AxiosError } from 'axios';
 const auth = {
   headers: {
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
   }
 } 
 
-export const getPopularMovies = (page: number, res: any) => {
+export const getPopularMovies = (page: number, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/popular?&page=${page}`, auth)
     .then((response) => {
     res(response)
@@ -15,7 +15,7 @@ export const getPopularMovies = (page: number, res: any) => {
   })
 }
 
-export const searchMovie = (src: string, res: any) => {
+export const searchMovie = (src: string, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/search/movie?&query=${src}&page=1`, auth)
   .then((response) => {
     res(response)
@@ -25,7 +25,7 @@ export const searchMovie = (src: string, res: any) => {
   })
 }
 
-export const getDetailMovie = (id: string, res: any) => {
+export const getDetailMovie = (id: string, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/${id}`, auth)
   .then((response) => {
     res(response)
@@ -35,7 +35,7 @@ export const getDetailMovie = (id: string, res: any) => {
   })
 }
 
-export const getNowPlayingMovies = (page: number, res: any) => {
+export const getNowPlayingMovies = (page: number, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/now_playing?&page=${page}`, auth)
   .then((response) => {
     res(response)
@@ -45,7 +45,7 @@ export const getNowPlayingMovies = (page: number, res: any) => {
   })
 }
 
-export const getTopRatedMovies = (page: number, res: any) => {
+export const getTopRatedMovies = (page: number, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/top_rated?&page=${page}`, auth)
   .then((response) => {
     res(response)
@@ -55,7 +55,7 @@ export const getTopRatedMovies = (page: number, res: any) => {
   })
 }
 
-export const getUpcomingMovies = (page: number, res: any) => {
+export const getUpcomingMovies = (page: number, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/movie/upcoming?&page=${page}`, auth)
   .then((response) => {
     res(response)
@@ -65,7 +65,7 @@ export const getUpcomingMovies = (page: number, res: any) => {
   })
 }
 
-export const getTrendingMovies = (page: number, res: any) => {
+export const getTrendingMovies = (page: number, res: (response: AxiosResponse | AxiosError) => void) => {
   axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/trending/movie/day?page=${page}`, auth)
     .then((response) => {
     res(response)
