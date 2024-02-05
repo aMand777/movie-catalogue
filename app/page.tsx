@@ -8,7 +8,7 @@ import {
   getTopRatedMovies,
 } from './services/movies'
 import { useEffect, useState } from 'react'
-import CardMovieSkeleton from './components/fragments/CardMovieSkeleton'
+import CardMoviesHomeSkeleton from './components/fragments/CardMoviesHomeSkeleton'
 import HeaderCardMoviesHome from './components/fragments/HeaderCardMoviesHome'
 
 export default function Home() {
@@ -54,7 +54,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <CardMovieSkeleton loop={12} />
+            <CardMoviesHomeSkeleton loop={12} />
           )}
         </div>
         <HeaderCardMoviesHome link='/movies/trending' title='View All Trending Movies'>
@@ -72,7 +72,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <CardMovieSkeleton loop={12} />
+            <CardMoviesHomeSkeleton loop={12} />
           )}
         </div>
         <HeaderCardMoviesHome link='/movies/nowplaying' title='View All Now Playing Movies'>
@@ -90,7 +90,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <CardMovieSkeleton loop={12} />
+            <CardMoviesHomeSkeleton loop={12} />
           )}
         </div>
         <HeaderCardMoviesHome link='/movies/upcoming' title='View All Upcoming Movies'>
@@ -108,7 +108,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <CardMovieSkeleton loop={12} />
+            <CardMoviesHomeSkeleton loop={12} />
           )}
         </div>
         <HeaderCardMoviesHome link='/movies/toprated' title='View All Top Rated Movies'>
@@ -126,7 +126,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <CardMovieSkeleton loop={12} />
+            <CardMoviesHomeSkeleton loop={12} />
           )}
         </div>
       </main>
