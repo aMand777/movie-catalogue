@@ -13,7 +13,7 @@ const CardMovieSkeleton: React.FC<CardMovieSkeletonProps> = ({ loop }) => {
     <>
       {looping.map((_, index) => (
         <div key={index}>
-          <div className='w-28 h-40 md:w-36 md:h-56 lg:w-48 lg:h-72 mx-1 relative'>
+          <div className='w-28 h-44 md:w-44 md:h-60 lg:w-52 lg:h-80 relative'>
             <Badge className='absolute top-0 right-0 rounded-tr-lg h-4 w-1/2 animate-pulse'></Badge>
             <div className='w-full h-5/6'>
               <Skeleton className='w-full h-full' />
