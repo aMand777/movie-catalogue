@@ -20,7 +20,6 @@ type Search = {
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('')
-  const [responseMessage, setResponseMessage] = useState<string>('')
   const [scroll, setScroll] = useState<number>(0)
 
   useEffect(() => {
