@@ -1,21 +1,23 @@
 'use client'
 import { getNowPlayingMovies } from '@/app/services/movies'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CardMovie from '../../components/fragments/CardMovie'
 import Pagination from '@/app/components/fragments/Pagination'
 import CardMovieSkeleton from '@/app/components/fragments/CardMovieSkeleton'
+import { useQuery } from '@tanstack/react-query'
 
 const NowPlayingPage = () => {
-  const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [page, setPage] = useState(1)
-
-  useEffect(() => {
-    getNowPlayingMovies(page, (res: any) => {
-      setMovies(res.data.results)
-      setTotalPages(res.data.total_pages)
-    })
-  }, [page])
+  
+  const { data: nowPlayingMovies, isLoading } = useQuery({
+    queryKey: ['GET_NOW_PLAYING_MOVIES', page],
+    queryFn: async () => {
+      const response = await getNowPlayingMovies(page)
+      setTotalPages(response.data.total_pages)
+      return response.data.results
+    },
+  })
 
   const nextPage = () => {
     setPage(page === totalPages ? page : page + 1)
@@ -35,18 +37,16 @@ const NowPlayingPage = () => {
   return (
     <>
       <div className='grid grid-cols-3 gap-2 px-3 md:px-5 lg:px-10 md:grid-cols-4 md:gap-3 lg:grid-cols-5 lg:gap-5 2xl:grid-cols-10 top-28 left-0 right-0 absolute -z-10'>
-        {movies.length > 0 ? (
-          movies.map((movie: MovieInterface) => (
-            <CardMovie
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              poster={movie.poster_path}
-              rating={movie.vote_average}
-            />
-          ))
-        ) : (
-          <CardMovieSkeleton loop={20} />
+        {nowPlayingMovies?.map((movie: MovieInterface) => (
+          <CardMovie
+            key={movie.id}
+            title={movie.title}
+            poster={movie.poster_path}
+            rating={movie.vote_average}
+            link={`/movies/${movie.id}/${movie.title}`}
+          />
+        ))}
+        {isLoading && (<CardMovieSkeleton loop={20} />
         )}
         <Pagination
           totalPage={totalPages}

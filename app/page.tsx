@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import CardMoviesHome from './components/fragments/CardMoviesHome'
 import {
   getPopularMovies,
@@ -7,34 +8,58 @@ import {
   getUpcomingMovies,
   getTopRatedMovies,
 } from './services/movies'
-import { useEffect, useState } from 'react'
 import CardMoviesHomeSkeleton from './components/fragments/CardMoviesHomeSkeleton'
 import HeaderCardMoviesHome from './components/fragments/HeaderCardMoviesHome'
+import { useQuery } from '@tanstack/react-query'
+
+type Movie = {
+  id: string
+  title: string
+  poster_path: string
+  vote_average: number
+  link: string
+}
 
 export default function Home() {
-  const [popularMovies, setPopularMovies] = useState([])
-  const [trendingMovies, setTrendingMovies] = useState([])
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([])
-  const [upcomingMovies, setUpcomingMovies] = useState([])
-  const [topRatedMovies, setTopRatedMovies] = useState([])
+  const { data: popularMovies, isLoading: loadingGetPopularMovies } = useQuery({
+    queryKey: ['GET_POPULAR_MOVIES'],
+    queryFn: async () => {
+      const response = await getPopularMovies()
+      return response.data.results
+    },
+  })
 
-  useEffect(() => {
-    getPopularMovies(1, (res: any) => {
-      setPopularMovies(res.data.results)
-    })
-    getTrendingMovies(1, (res: any) => {
-      setTrendingMovies(res.data.results)
-    })
-    getNowPlayingMovies(1, (res: any) => {
-      setNowPlayingMovies(res.data.results)
-    })
-    getUpcomingMovies(1, (res: any) => {
-      setUpcomingMovies(res.data.results)
-    })
-    getTopRatedMovies(1, (res: any) => {
-      setTopRatedMovies(res.data.results)
-    })
-  }, [])
+  const { data: trendingMovies, isLoading: loadingGetTrendingMovies } = useQuery({
+    queryKey: ['GET_TRENDING_MOVIES'],
+    queryFn: async () => {
+      const response = await getTrendingMovies()
+      return response.data.results
+    },
+  })
+
+  const { data: nowPlayingMovies, isLoading: loadingNowPlayingMovies } = useQuery({
+    queryKey: ['GET_NOW_PLAYING_MOVIES'],
+    queryFn: async () => {
+      const response = await getNowPlayingMovies()
+      return response.data.results
+    },
+  })
+
+  const { data: upcomingMovies, isLoading: loadingUpcomingMovies } = useQuery({
+    queryKey: ['GET_UPCOMING_MOVIES'],
+    queryFn: async () => {
+      const response = await getUpcomingMovies()
+      return response.data.results
+    },
+  })
+
+  const { data: topRatedMovies, isLoading: loadingTopRatedMovies } = useQuery({
+    queryKey: ['GET_TOP_RATED_MOVIES'],
+    queryFn: async () => {
+      const response = await getTopRatedMovies()
+      return response.data.results
+    },
+  })
 
   return (
     <>
@@ -43,91 +68,76 @@ export default function Home() {
           Popular
         </HeaderCardMoviesHome>
         <div className='scroll-none flex overflow-scroll mx-1 md:mx-3'>
-          {popularMovies.length > 0 ? (
-            popularMovies.map((movie: any) => (
-              <CardMoviesHome
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-                rating={movie.vote_average}
-              />
-            ))
-          ) : (
-            <CardMoviesHomeSkeleton loop={12} />
-          )}
+          {popularMovies?.map((movie: Movie) => (
+            <CardMoviesHome
+              key={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {loadingGetPopularMovies && <CardMoviesHomeSkeleton loop={12} />}
         </div>
         <HeaderCardMoviesHome link='/movies/trending' title='View All Trending Movies'>
           Trending
         </HeaderCardMoviesHome>
         <div className='scroll-none flex overflow-scroll mx-1 md:mx-3'>
-          {trendingMovies.length > 0 ? (
-            trendingMovies.map((movie: any) => (
-              <CardMoviesHome
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-                rating={movie.vote_average}
-              />
-            ))
-          ) : (
-            <CardMoviesHomeSkeleton loop={12} />
-          )}
+          {trendingMovies?.map((movie: Movie) => (
+            <CardMoviesHome
+              key={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {loadingGetTrendingMovies && <CardMoviesHomeSkeleton loop={12} />}
         </div>
         <HeaderCardMoviesHome link='/movies/nowplaying' title='View All Now Playing Movies'>
           Now Playing
         </HeaderCardMoviesHome>
         <div className='scroll-none flex overflow-scroll mx-1 md:mx-3'>
-          {nowPlayingMovies.length > 0 ? (
-            nowPlayingMovies.map((movie: any) => (
-              <CardMoviesHome
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-                rating={movie.vote_average}
-              />
-            ))
-          ) : (
-            <CardMoviesHomeSkeleton loop={12} />
-          )}
+          {nowPlayingMovies?.map((movie: Movie) => (
+            <CardMoviesHome
+              key={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {loadingNowPlayingMovies && <CardMoviesHomeSkeleton loop={12} />}
         </div>
         <HeaderCardMoviesHome link='/movies/upcoming' title='View All Upcoming Movies'>
           Upcoming
         </HeaderCardMoviesHome>
         <div className='scroll-none flex overflow-scroll mx-1 md:mx-3'>
-          {upcomingMovies.length > 0 ? (
-            upcomingMovies.map((movie: any) => (
-              <CardMoviesHome
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-                rating={movie.vote_average}
-              />
-            ))
-          ) : (
-            <CardMoviesHomeSkeleton loop={12} />
-          )}
+          {upcomingMovies?.map((movie: Movie) => (
+            <CardMoviesHome
+              key={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {loadingUpcomingMovies && <CardMoviesHomeSkeleton loop={12} />}
         </div>
         <HeaderCardMoviesHome link='/movies/toprated' title='View All Top Rated Movies'>
           Top Rated
         </HeaderCardMoviesHome>
         <div className='scroll-none flex overflow-scroll mx-1 md:mx-3 mb-10'>
-          {topRatedMovies.length > 0 ? (
-            topRatedMovies.map((movie: any) => (
-              <CardMoviesHome
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-                rating={movie.vote_average}
-              />
-            ))
-          ) : (
-            <CardMoviesHomeSkeleton loop={12} />
-          )}
+          {topRatedMovies?.map((movie: Movie) => (
+            <CardMoviesHome
+              key={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {loadingTopRatedMovies && <CardMoviesHomeSkeleton loop={12} />}
         </div>
       </main>
     </>

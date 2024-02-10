@@ -1,6 +1,8 @@
-import { Card, CardBody, Text, Divider, Image, useDisclosure } from '@chakra-ui/react'
-import DetailMovie from './DetailMovie'
+import React from 'react'
+import { Card, CardBody, Text, Divider, Image } from '@chakra-ui/react'
+// import DetailMovie from './DetailMovie'
 import { StarIcon } from '@chakra-ui/icons'
+import Link from 'next/link';
 
 type CardMoviesProps = {
   id: string;
@@ -8,15 +10,16 @@ type CardMoviesProps = {
   poster: string;
   year: string;
   rating: number;
+  link: string
 }
 
-const SearchMenu = (Props: CardMoviesProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { title, poster, year, rating, id } = Props
+const SearchMenu: React.FC<CardMoviesProps> = ({id, title, poster, year, rating, link}) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure()
+  // const { title, poster, year, rating, id } = Props
   
   return (
     <>
-    <button onClick={onOpen}>
+    <Link href={link}>
     <div className='grid grid-cols-6 w-fit p-2 bg-black hover:opacity-95 group'>
     <Card key={id} maxW='sm'>
       <CardBody className='p-0 col-span-2 group-hover:animate-pulse'>
@@ -35,8 +38,8 @@ const SearchMenu = (Props: CardMoviesProps) => {
           </Text>
     </div>
     <Divider className='-mt-2'/>
-    </button>
-    <DetailMovie id={id} onClose={onClose} isOpen={isOpen} />
+    </Link>
+    {/* <DetailMovie id={id} onClose={onClose} isOpen={isOpen} /> */}
     </>
   )
 }

@@ -1,5 +1,6 @@
+'use client'
 import { getDetailMovie } from '@/app/services/movies'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { StarIcon } from '@chakra-ui/icons'
 import {
   Modal,
@@ -11,103 +12,165 @@ import {
   ModalCloseButton,
   Button,
   Image,
+  useDisclosure,
 } from '@chakra-ui/react'
+import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import DetailMovieSkeleton from '../templates/DetailMovieSkeleton'
 
-interface DetailMovieProps {
-  onClose: () => void,
-  isOpen: boolean,
-  id: string,
+type MovieDetail = {
+  id: string
+  title: string
+  overview: string
+  poster_path: string
+  release_date: string
+  vote_average: number
+  status: string
+  tagline: string
+  original_language: string
+  original_title: string
+  budget: number
+  runtime: number
+  country: string
+  genre: string
+  production: string
+  spoken: string
 }
 
-const DetailMovie: React.FC<DetailMovieProps> = ({ isOpen, onClose, id }) => {
-  const [genres, setGenres] = useState([])
-  const [companies, setCompanies] = useState([])
-  const [countries, setCountries] = useState([])
-  const [spoken, setSpoken] = useState([])
-  const [detailMovies, setDetailMovies] = useState<any>({
-    title: '',
-    poster_path: '',
-    overview: '',
-    release_date: '',
-    vote_average: 0,
-    budget: 0,
-    original_language: '',
-    popularity: null,
-    runtime: null,
-    status: '',
-    tagline: '',
-    original_title: '',
+const DetailMovie = ({ id }: { id: string }) => {
+  const router = useRouter()
+  const [detailMovie, setDetailMovie] = useState<MovieDetail>()
+
+  const { isLoading } = useQuery({
+    queryKey: ['GET_DETAIL_MOVIE', id],
+    queryFn: async () => {
+      const response = await getDetailMovie(id)
+      const movie = response.data
+      const spokenLanguages = movie.spoken_languages.map((spoken: { name: string }) => spoken.name)
+      const countries = movie.production_countries.map((country: { name: string }) => country.name)
+      const productions = movie.production_companies.map(
+        (company: { name: string }) => company.name,
+      )
+      const genres = movie.genres.map((genre: { name: string }) => genre.name)
+      const production = productions.join(', ')
+      const country = countries.join(', ')
+      const genre = genres.join(', ')
+      const spoken = spokenLanguages.join(', ')
+      const movieDetail: MovieDetail = {
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        poster_path: movie.poster_path,
+        release_date: movie.release_date,
+        vote_average: movie.vote_average,
+        status: movie.status,
+        tagline: movie.tagline,
+        budget: movie.budget,
+        runtime: movie.runtime,
+        original_language: movie.original_language,
+        original_title: movie.original_title,
+        country,
+        genre,
+        production,
+        spoken,
+      }
+      setDetailMovie(movieDetail)
+      return response
+    },
   })
 
-  useEffect(() => {
-    getDetailMovie(id, (res: any) => {
-      setDetailMovies(res.data)
-      setGenres(res.data.genres)
-      setCompanies(res.data.production_companies)
-      setCountries(res.data.production_countries)
-      setSpoken(res.data.spoken_languages)
-    })
-  }, [id])
+  const handleButtonClose = () => {
+    router.back()
+  }
 
-  const { title, poster_path, overview, release_date, vote_average, budget, runtime, tagline, original_language, original_title } = detailMovies
+  if (isLoading) {
+    return <DetailMovieSkeleton />
+  }
 
   return (
     <>
-      <Modal onClose={onClose} isOpen={isOpen} size='full'>
+      <Modal onClose={handleButtonClose} isOpen={true} size='full'>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader className='text-center mt-5'>{title}</ModalHeader>
+          <ModalHeader className='text-center mt-5'>{detailMovie?.title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody className='sm:flex'>
             <Image
-            width='400px'
-            height='500px'
-            src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${poster_path}`}
-              alt={title}
+              width='400px'
+              height='500px'
+              src={`${process.env.NEXT_PUBLIC_BASEIMGURL}/${detailMovie?.poster_path}`}
+              alt={detailMovie?.title}
               className='mx-auto'
-          />
-          <div className='flex flex-col sm:ml-3 mt-3 sm:mt-0'>
-            <p className='italic text-justif relative'><span className='font-semibold'>Overview: </span>{overview}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Release: </span>{release_date}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Runtime: </span>{`${runtime} min`}</p>
-            <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Genre: </span>
-              {genres.length > 0 && genres.map((genre: any) => (
-              <p key={genre.id} className='italic text-justify mx-1'>{`${genre.name},`}</p>
-              ))}
+            />
+            <div className='flex flex-col sm:ml-3 mt-3 sm:mt-0'>
+              <p className='italic text-justif relative'>
+                <span className='font-semibold'>Overview: </span>
+                {detailMovie?.overview}
+              </p>
+              <p className='italic mt-2'>
+                <span className='font-semibold'>Release: </span>
+                {detailMovie?.release_date}
+              </p>
+              <p className='italic mt-2'>
+                <span className='font-semibold'>Runtime: </span>
+                {`${detailMovie?.runtime} min`}
+              </p>
+              <div className='flex flex-wrap mt-2'>
+                <span className='font-semibold'>Genre: </span>
+                <p className='italic text-justify mx-1'>{detailMovie?.genre}</p>
+              </div>
+              <p className={`italic mt-2 ${detailMovie?.vote_average === 0 && 'hidden'}`}>
+                <span className='font-semibold mx-1'>Rating: </span>
+                <StarIcon color='yellow.500' className='mx-1 -mt-1' />
+                <StarIcon
+                  color='yellow.500'
+                  className={`mx-1 -mt-1 ${
+                    detailMovie !== undefined && detailMovie.vote_average < 7 && 'hidden'
+                  }`}
+                />
+                <StarIcon
+                  color='yellow.500'
+                  className={`mx-1 -mt-1 ${
+                    detailMovie !== undefined && detailMovie.vote_average < 9 && 'hidden'
+                  }`}
+                />
+                {detailMovie?.vote_average.toString().substring(0, 3)}
+              </p>
+              <p className={`italic mt-2 ${detailMovie?.budget === 0 && 'hidden'}`}>
+                <span className='font-semibold'>Budget: </span>
+                {detailMovie?.budget.toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                })}
+              </p>
+              <p className='italic mt-2'>
+                <span className='font-semibold'>Original Title: </span>
+                {detailMovie?.original_title}
+              </p>
+              <p className='italic mt-2'>
+                <span className='font-semibold'>Original Language: </span>
+                {detailMovie?.original_language}
+              </p>
+              <p className='italic mt-2'>
+                <span className='font-semibold'>Tagline: </span>
+                {detailMovie?.tagline}
+              </p>
+              <div className='flex flex-wrap mt-2'>
+                <span className='font-semibold'>Production Companies: </span>
+                <p className='italic text-justify mx-1'>{`${detailMovie?.production},`}</p>
+              </div>
+              <div className='flex flex-wrap mt-2'>
+                <span className='font-semibold'>Production Country: </span>
+                <p className='italic text-justify mx-1'>{`${detailMovie?.country},`}</p>
+              </div>
+              <div className='flex flex-wrap mt-2'>
+                <span className='font-semibold'>Spoken Language: </span>
+                <p className='italic text-justify mx-1'>{detailMovie?.spoken}</p>
+              </div>
             </div>
-            <p className={`italic mt-2 ${vote_average === 0 && 'hidden'}`}><span className='font-semibold mx-1'>Rating: </span>
-              <StarIcon color='yellow.500' className='mx-1 -mt-1' />
-              <StarIcon color='yellow.500' className={`mx-1 -mt-1 ${vote_average < 7 && 'hidden' }`} />
-              <StarIcon color='yellow.500' className={`mx-1 -mt-1 ${vote_average < 9 && 'hidden' }`} />
-              {vote_average.toString().substring(0, 3)}
-            </p>
-            <p className={`italic mt-2 ${budget === 0 && 'hidden'}`}><span className='font-semibold'>Budget: </span>{budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Original Title: </span>{original_title}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Original Language: </span>{original_language}</p>
-            <p className='italic mt-2'><span className='font-semibold'>Tagline: </span>{tagline}</p>
-            <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Production Companies: </span>
-              {companies.length > 0 && companies.map((company: any) => (
-              <p key={company.id} className='italic text-justify mx-1'>{`${company.name},`}</p>
-              ))}
-            </div>
-            <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Production Country: </span>
-              {countries.length > 0 && countries.map((country: any) => (
-              <p key={country.id} className='italic text-justify mx-1'>{`${country.name},`}</p>
-              ))}
-            </div>
-            <div className='flex flex-wrap mt-2'>
-              <span className='font-semibold'>Spoken Language: </span>
-              {spoken.length > 0 && spoken.map((speak: any) => (
-              <p key={speak.id} className='italic text-justify mx-1'>{`${speak.name},`}</p>
-              ))}
-            </div>
-          </div>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={handleButtonClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
