@@ -9,7 +9,8 @@ title: string
 link: string
 }
 
-const HeaderCardMoviesHome: React.FC<HeaderCardMoviesHomeProps> = ({children, title, link}) => {
+const HeaderCardMoviesHome: React.FC<HeaderCardMoviesHomeProps> = ({ children, title, link }) => {
+
   return (
     <>
     <div className='flex justify-between items-center mx-1 md:mx-3 mt-5'>

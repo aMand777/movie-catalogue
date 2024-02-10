@@ -6,12 +6,20 @@ import { searchMovie } from '@/app/services/movies'
 import SearchMenu from '../fragments/SearchMenu'
 import MovieSearchSkeleton from '../fragments/MovieSearchSkeleton'
 import AlertMessage from './AlertMessage'
+import { useQuery } from '@tanstack/react-query'
+
+type Search = {
+  key: string
+  id: string
+  title: string
+  poster_path: string
+  release_date: string
+  vote_average: number
+}
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
   const [keyword, setKeyword] = useState<string>('')
-  const [movieSearch, setMovieSearch] = useState<[]>([])
   const [responseMessage, setResponseMessage] = useState<string>('')
   const [scroll, setScroll] = useState<number>(0)
 
@@ -40,20 +48,14 @@ const SearchBar = () => {
     setIsFocused(false)
   }
 
-  useEffect(() => {
-    setLoading(true)
-    if (keyword.length >= 3) {
-      searchMovie(keyword, (res: any) => {
-        if (res.data.results.length > 1) {
-          setMovieSearch(res.data.results)
-          setLoading(false)
-        }
-        setResponseMessage(`movie ${keyword} not found`)
-        setLoading(false)
-      })
+  const {data: searchResults, isLoading} = useQuery({
+    queryKey: ['GET_QUERY_SEARCH', keyword],
+    queryFn: async () => {
+      const response = await searchMovie(keyword)
+      return response.data.results
     }
-  }, [keyword])
-
+  })
+  
   return (
     <>
       <button onClick={handleClick} className={`${!isFocused && 'hidden'}`}>
@@ -81,20 +83,20 @@ const SearchBar = () => {
           className={`h-screen overflow-scroll relative ${
             keyword.length < 3 || !isFocused ? 'hidden' : ''
           }`}>
-          {movieSearch.length > 0
-            ? movieSearch.map((movie: any) => (
-                <SearchMenu
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  poster={movie.poster_path}
-                  year={movie.release_date}
-                  rating={movie.vote_average}
-                />
-              ))
-            : loading === true && <MovieSearchSkeleton loop={7} />}
-          {loading === false && movieSearch.length < 1 && (
-            <AlertMessage status='warning' title={responseMessage} />
+          {searchResults?.map((movie: Search) => (
+            <SearchMenu
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+              year={movie.release_date}
+              rating={movie.vote_average}
+              link={`/movies/${movie.id}/${movie.title}`}
+            />
+          ))}
+          {isLoading && (<MovieSearchSkeleton loop={7} />)}
+          {!isLoading && searchResults?.length < 1 && (
+            <AlertMessage status='warning' title={keyword} description='Not Found' />
           )}
         </div>
       </div>

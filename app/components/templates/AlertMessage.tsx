@@ -9,7 +9,7 @@ import {
 type AlertProps = {
   status: 'error' | 'success' | 'warning' | 'info'
   title: string
-  description?: string
+  description: string
 }
 
 const AlertMessage: React.FC<AlertProps> = ({status, title, description}) => {
