@@ -17,6 +17,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import DetailMovieSkeleton from '../templates/DetailMovieSkeleton'
+import ContentDetailMovie from './ContentDetailMovie'
 
 type MovieDetail = {
   id: string
@@ -103,70 +104,37 @@ const DetailMovie = ({ id }: { id: string }) => {
               className='mx-auto'
             />
             <div className='flex flex-col sm:ml-3 mt-3 sm:mt-0'>
-              <p className='italic text-justif relative'>
-                <span className='font-semibold'>Overview: </span>
-                {detailMovie?.overview}
-              </p>
-              <p className='italic mt-2'>
-                <span className='font-semibold'>Release: </span>
-                {detailMovie?.release_date}
-              </p>
-              <p className='italic mt-2'>
-                <span className='font-semibold'>Runtime: </span>
-                {`${detailMovie?.runtime} min`}
-              </p>
-              <div className='flex flex-wrap mt-2'>
-                <span className='font-semibold'>Genre: </span>
-                <p className='italic text-justify mx-1'>{detailMovie?.genre}</p>
-              </div>
-              <p className={`italic mt-2 ${detailMovie?.vote_average === 0 && 'hidden'}`}>
-                <span className='font-semibold mx-1'>Rating: </span>
-                <StarIcon color='yellow.500' className='mx-1 -mt-1' />
-                <StarIcon
-                  color='yellow.500'
-                  className={`mx-1 -mt-1 ${
-                    detailMovie !== undefined && detailMovie.vote_average < 7 && 'hidden'
-                  }`}
-                />
-                <StarIcon
-                  color='yellow.500'
-                  className={`mx-1 -mt-1 ${
-                    detailMovie !== undefined && detailMovie.vote_average < 9 && 'hidden'
-                  }`}
-                />
-                {detailMovie?.vote_average.toString().substring(0, 3)}
-              </p>
-              <p className={`italic mt-2 ${detailMovie?.budget === 0 && 'hidden'}`}>
-                <span className='font-semibold'>Budget: </span>
+              <ContentDetailMovie title='Overview'>{detailMovie?.overview}</ContentDetailMovie>
+              <ContentDetailMovie title='Release'>{detailMovie?.release_date}</ContentDetailMovie>
+              <ContentDetailMovie title='Runtime'>{detailMovie?.runtime} min</ContentDetailMovie>
+              <ContentDetailMovie title='Genre'>{detailMovie?.genre}</ContentDetailMovie>
+              <ContentDetailMovie
+                className={detailMovie?.vote_average === 0 ? 'hidden' : ''}
+                title='Rating'>
+                {detailMovie?.genre}
+              </ContentDetailMovie>
+              <ContentDetailMovie
+                className={detailMovie?.budget === 0 ? 'hidden' : ''}
+                title='Budget'>
                 {detailMovie?.budget.toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD',
                 })}
-              </p>
-              <p className='italic mt-2'>
-                <span className='font-semibold'>Original Title: </span>
+              </ContentDetailMovie>
+              <ContentDetailMovie title='Original Title'>
                 {detailMovie?.original_title}
-              </p>
-              <p className='italic mt-2'>
-                <span className='font-semibold'>Original Language: </span>
+              </ContentDetailMovie>
+              <ContentDetailMovie title='Original Language'>
                 {detailMovie?.original_language}
-              </p>
-              <p className='italic mt-2'>
-                <span className='font-semibold'>Tagline: </span>
-                {detailMovie?.tagline}
-              </p>
-              <div className='flex flex-wrap mt-2'>
-                <span className='font-semibold'>Production Companies: </span>
-                <p className='italic text-justify mx-1'>{`${detailMovie?.production},`}</p>
-              </div>
-              <div className='flex flex-wrap mt-2'>
-                <span className='font-semibold'>Production Country: </span>
-                <p className='italic text-justify mx-1'>{`${detailMovie?.country},`}</p>
-              </div>
-              <div className='flex flex-wrap mt-2'>
-                <span className='font-semibold'>Spoken Language: </span>
-                <p className='italic text-justify mx-1'>{detailMovie?.spoken}</p>
-              </div>
+              </ContentDetailMovie>
+              <ContentDetailMovie title='Tagline'>{detailMovie?.tagline}</ContentDetailMovie>
+              <ContentDetailMovie title='Production Companies'>
+                {detailMovie?.production}
+              </ContentDetailMovie>
+              <ContentDetailMovie title='Production Country'>
+                {detailMovie?.country}
+              </ContentDetailMovie>
+              <ContentDetailMovie title='Spoken Language'>{detailMovie?.spoken}</ContentDetailMovie>
             </div>
           </ModalBody>
           <ModalFooter>
