@@ -12,7 +12,6 @@ import {
   ModalCloseButton,
   Button,
   Image,
-  useDisclosure,
 } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -111,11 +110,22 @@ const DetailMovie = ({ id }: { id: string }) => {
               <ContentDetailMovie
                 className={detailMovie?.vote_average === 0 ? 'hidden' : ''}
                 title='Rating'>
-                {detailMovie?.genre}
+                <StarIcon color='yellow.500' className='mx-1 -mt-1' />
+                <StarIcon
+                  color='yellow.500'
+                  className={`mx-1 -mt-1 ${
+                    detailMovie !== undefined && detailMovie.vote_average < 7 && 'hidden'
+                  }`}
+                />
+                <StarIcon
+                  color='yellow.500'
+                  className={`mx-1 -mt-1 ${
+                    detailMovie !== undefined && detailMovie.vote_average < 9 && 'hidden'
+                  }`}
+                />
+                {detailMovie?.vote_average.toString().substring(0, 3)}
               </ContentDetailMovie>
-              <ContentDetailMovie
-                className={detailMovie?.budget === 0 ? 'hidden' : ''}
-                title='Budget'>
+              <ContentDetailMovie title='Budget'>
                 {detailMovie?.budget.toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD',
