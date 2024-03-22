@@ -9,7 +9,7 @@ import ReactQueryProvider from './ReactQueryProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Movies Info',
+  title: 'Movie Catalogue',
   description: 'App Movies Information',
 }
 
